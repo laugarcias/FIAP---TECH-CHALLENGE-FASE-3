@@ -1,10 +1,9 @@
 """
-
 TECH CHALLENGE - FASE 3 | JOB 02 - CAMADA SILVER
-
 Harmonizar as 3 edições da Bronze em um modelo único e comparável:
 1) silver_respondentes = 1 linha por respondente/edição,colunas com o MESMO nome nos 3 anos, tipos corretos e categorias padronizadas.
 2) silver_respostas_multiplas = formato longo (respondente x item) das perguntas de múltipla escolha(linguagens, cloud, BI, IA, ETL...).
+
 Entrada  : s3://<BUCKET>/bronze/...
 Saída    : s3://<BUCKET>/silver/respondentes/ano_coleta=<ano>/
            s3://<BUCKET>/silver/respostas_multiplas/ano_coleta=<ano>/
