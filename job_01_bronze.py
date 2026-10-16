@@ -1,11 +1,7 @@
 """
-
 TECH CHALLENGE - FASE 3 | JOB 01 - CAMADA BRONZE
-Objetivo
-    Ler os 3 CSVs brutos do State of Data Brasil (pasta landing/ do S3),
-    padronizar somente  os nomes das colunas (os valores ficam intactos),
-    acrescentar metadados de ingestão e gravar em Parquet na camada
-    Bronze, criando/atualizando as tabelas no Glue Data Catalog.
+Objetivo: Ler os 3 CSVs brutos do State of Data Brasil (pasta landing/ do S3),padronizar somente  os nomes das colunas (os valores ficam intactos),acrescentar metadados 
+de ingestão e gravar em Parquet na camada Bronze, criando/atualizando as tabelas no Glue Data Catalog.
 
 Entrada  : s3://<BUCKET>/landing/state_of_data/<arquivo>.csv
 Saída    : s3://<BUCKET>/bronze/state_of_data_<edicao>/ano_coleta=<ano>/
@@ -118,8 +114,6 @@ def gravar_tabela(df, caminho, tabela, particoes):
     print(f"[OK] {DATABASE}.{tabela} -> {caminho}")
 
 # 3. Ingestão de cada edição
-
-
 linhas_dicionario = []
 
 for arquivo, ano, sufixo in EDICOES:
