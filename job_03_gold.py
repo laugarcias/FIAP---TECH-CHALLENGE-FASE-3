@@ -1,18 +1,14 @@
 """
-=====================================================================
 TECH CHALLENGE - FASE 3 | JOB 03 - CAMADA GOLD
-=====================================================================
-Objetivo
-    Gerar tabelas agregadas e prontas para consumo (Athena, gráficos,
-    BI), cada uma ligada a uma das perguntas de negócio do desafio:
 
-    gold_fato_mercado            -> base agregada multidimensional
-                                    (estrutura do mercado, cortes livres)
-    gold_remuneracao             -> salário estimado por cargo x nível
-    gold_diversidade_genero      -> participação e salário por gênero
-    gold_adocao_tecnologias      -> % de adoção de cada tecnologia
-    gold_adocao_ia               -> indicadores de uso de IA generativa
-    gold_trabalho_regiao         -> modelo de trabalho x região x nível
+Objetivo: Gerar tabelas agregadas e prontas para consumo (Athena, gráficos,BI), cada uma ligada a uma das perguntas de negócio do desafio:
+
+gold_fato_mercado = base agregada multidimensional (estrutura do mercado, cortes livres)
+gold_remuneracao = salário estimado por cargo x nível
+gold_diversidade_genero = participação e salário por gênero
+gold_adocao_tecnologias = % de adoção de cada tecnologia
+gold_adocao_ia = indicadores de uso de IA generativa
+gold_trabalho_regiao = modelo de trabalho x região x nível
 
 Entrada  : s3://<BUCKET>/silver/...
 Saída    : s3://<BUCKET>/gold/<tabela>/ano_coleta=<ano>/
@@ -25,7 +21,7 @@ Convenções
                 (a pesquisa só coleta faixas, não valores exatos)
     - Indicadores de remuneração usam apenas respondentes ocupados e
       com faixa salarial válida.
-=====================================================================
+
 """
 import sys
 
@@ -52,10 +48,8 @@ job.init(args["JOB_NAME"], args)
 # trazem a contagem (qtd_*) e a coluna amostra_suficiente para filtrar.
 MIN_AMOSTRA = 30
 
-
-# ------------------------------------------------------------------
 # Funções auxiliares
-# ------------------------------------------------------------------
+
 def pct(numerador, denominador):
     return F.round(F.col(numerador) * 100.0 / F.col(denominador), 2)
 
@@ -91,10 +85,8 @@ def gravar_tabela(df_saida, tabela):
     sink.writeFrame(dyf)
     print(f"[OK] {DATABASE}.{tabela}: {df_saida.count()} linhas")
 
-
-# ------------------------------------------------------------------
 # Leitura da Silver
-# ------------------------------------------------------------------
+
 resp = spark.read.parquet(f"{RAIZ}/silver/respondentes/").cache()
 multi = spark.read.parquet(f"{RAIZ}/silver/respostas_multiplas/")
 
@@ -105,14 +97,12 @@ NAO_INFORMADO = "Não informado"
 def preencher(df, colunas):
     return df.fillna(NAO_INFORMADO, subset=colunas)
 
-
-# ------------------------------------------------------------------
 # 1. gold_fato_mercado
 #    Uma linha por combinação de dimensões. Permite responder
 #    "como está estruturado o mercado" com qualquer corte.
 #    Use SUM(qtd_respondentes) e, para salário,
 #    SUM(soma_salario_estimado) / SUM(qtd_com_salario).
-# ------------------------------------------------------------------
+
 dims_fato = [
     "ano_coleta", "edicao", "cargo_padronizado", "nivel_padronizado", "atuacao",
     "genero_padronizado", "faixa_idade", "regiao", "uf", "setor", "porte_empresa",
@@ -134,10 +124,9 @@ fato = (
 )
 gravar_tabela(fato, "gold_fato_mercado")
 
-# ------------------------------------------------------------------
 # 2. gold_remuneracao  ("Quais perfis são mais valorizados?")
 #    Cortes: geral, cargo, nível e cargo x nível
-# ------------------------------------------------------------------
+
 def remuneracao_por(dimensoes, rotulo):
     df = preencher(base_sal, dimensoes).groupBy("ano_coleta", *dimensoes).agg(*metricas_salario())
     for d in ["cargo_padronizado", "nivel_padronizado"]:
@@ -161,11 +150,10 @@ remuneracao = remuneracao.withColumn(
 )
 gravar_tabela(remuneracao, "gold_remuneracao")
 
-# ------------------------------------------------------------------
 # 3. gold_diversidade_genero  ("Cenário de diversidade de gênero")
 #    Para cada corte (geral/cargo/nível/região): participação de cada
 #    gênero e salário médio estimado (ocupados com salário).
-# ------------------------------------------------------------------
+
 partes = []
 for corte in ["geral", "cargo_padronizado", "nivel_padronizado", "regiao", "faixa_idade"]:
     base = resp if corte == "geral" else preencher(resp, [corte])
@@ -195,11 +183,10 @@ diversidade = (
 )
 gravar_tabela(diversidade, "gold_diversidade_genero")
 
-# ------------------------------------------------------------------
 # 4. gold_adocao_tecnologias  ("Quais tecnologias têm maior adoção?")
 #    Denominador = quem respondeu aquela pergunta na edição.
 #    Também traz o corte por cargo para ver tecnologias por perfil.
-# ------------------------------------------------------------------
+
 multi_perfil = multi.join(
     resp.select("ano_coleta", "id_respondente", "cargo_padronizado", "nivel_padronizado"),
     ["ano_coleta", "id_respondente"], "left",
@@ -237,11 +224,10 @@ adocao = (
 )
 gravar_tabela(adocao, "gold_adocao_tecnologias")
 
-# ------------------------------------------------------------------
 # 5. gold_adocao_ia  ("Índice de adoção de IA e seu impacto")
 #    Formato longo: indicador / resposta / qtd / base / pct,
 #    com cortes geral, nível e cargo.
-# ------------------------------------------------------------------
+
 def distribuicao(coluna, indicador, dimensao=None):
     base = resp.where(F.col(coluna).isNotNull())
     grupo = ["ano_coleta"] + ([dimensao] if dimensao else [])
@@ -311,10 +297,9 @@ adocao_ia = (
 )
 gravar_tabela(adocao_ia, "gold_adocao_ia")
 
-# ------------------------------------------------------------------
 # 6. gold_trabalho_regiao
 #    ("Diferenças entre regiões, senioridades e modelos de trabalho")
-# ------------------------------------------------------------------
+
 dims_reg = ["regiao", "nivel_padronizado", "modelo_trabalho_atual_pad", "modelo_trabalho_ideal_pad"]
 trabalho = (
     preencher(resp.where(F.col("ocupado")), dims_reg)
