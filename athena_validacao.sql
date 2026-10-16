@@ -1,14 +1,12 @@
--- =====================================================================
+
 -- TECH CHALLENGE - FASE 3 | VALIDAÇÃO DAS CAMADAS NO ATHENA
--- Database: db_state_of_data  (troque se usou outro nome)
+-- Database: db_state_of_data
 -- Rode cada bloco separadamente no editor do Athena.
 -- Os valores "esperados" abaixo vieram do teste local dos jobs
 -- com os 3 CSVs enviados. Se der diferente, algo mudou no caminho.
--- =====================================================================
 
--- ---------------------------------------------------------------------
 -- 1. BRONZE: linhas por edição (esperado: 5293 | 5217 | 3495)
--- ---------------------------------------------------------------------
+
 SELECT '2023-2024' AS edicao, COUNT(*) AS linhas FROM db_state_of_data.bronze_state_of_data_2023_2024
 UNION ALL
 SELECT '2024-2025', COUNT(*) FROM db_state_of_data.bronze_state_of_data_2024_2025
@@ -16,16 +14,16 @@ UNION ALL
 SELECT '2025-2026', COUNT(*) FROM db_state_of_data.bronze_state_of_data_2025_2026;
 
 -- Dicionário de colunas (esperado: 399 | 403 | 388 colunas)
+
 SELECT ano_coleta, COUNT(*) AS qtd_colunas
 FROM db_state_of_data.bronze_dicionario_colunas
 GROUP BY ano_coleta
 ORDER BY ano_coleta;
 
--- ---------------------------------------------------------------------
 -- 2. SILVER: respondentes por edição após deduplicação
 --    (esperado: 2023 = 5293 | 2024 = 5215 | 2025 = 3494)
 --    2024 perde 2 linhas e 2025 perde 1 (tokens repetidos no arquivo).
--- ---------------------------------------------------------------------
+
 SELECT ano_coleta, edicao, COUNT(*) AS respondentes,
        COUNT(DISTINCT id_respondente) AS ids_distintos
 FROM db_state_of_data.silver_respondentes
@@ -33,6 +31,7 @@ GROUP BY ano_coleta, edicao
 ORDER BY ano_coleta;
 
 -- Completude das principais colunas (% de nulos)
+
 SELECT ano_coleta,
        ROUND(100.0 * SUM(CASE WHEN genero IS NULL THEN 1 ELSE 0 END) / COUNT(*), 1)            AS pct_nulo_genero,
        ROUND(100.0 * SUM(CASE WHEN regiao IS NULL THEN 1 ELSE 0 END) / COUNT(*), 1)            AS pct_nulo_regiao,
@@ -55,9 +54,8 @@ WHERE categoria = 'cloud'
 GROUP BY ano_coleta, item
 ORDER BY ano_coleta, qtd DESC;
 
--- ---------------------------------------------------------------------
 -- 3. GOLD: conferência cruzada com a Silver
--- ---------------------------------------------------------------------
+
 -- 3.1 A soma do fato deve bater com a Silver
 SELECT f.ano_coleta, f.total_fato, s.total_silver
 FROM (SELECT ano_coleta, SUM(qtd_respondentes) AS total_fato
@@ -90,9 +88,8 @@ UNION ALL SELECT 'gold_adocao_ia', COUNT(*) FROM db_state_of_data.gold_adocao_ia
 UNION ALL SELECT 'gold_trabalho_regiao', COUNT(*) FROM db_state_of_data.gold_trabalho_regiao;
 -- esperado: 13437 | 214 | 349 | 8252 | 202 | 848
 
--- ---------------------------------------------------------------------
 -- 4. CONSULTAS DE EXEMPLO PARA O TIME DE ANÁLISE
--- ---------------------------------------------------------------------
+
 -- Top 5 linguagens por edição
 SELECT ano_coleta, item, pct_adocao, ranking
 FROM db_state_of_data.gold_adocao_tecnologias
