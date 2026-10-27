@@ -21,7 +21,9 @@ Projeto desenvolvido para o **Tech Challenge — Fase 3 da Pós-Graduação em D
 
 ## 📊 Sobre o Projeto
 
-_a preencher_
+Uma instituição financeira quer expandir sua área de Dados, Analytics e IA e, antes disso, precisa entender o mercado brasileiro de profissionais de dados.
+
+O mercado paga mais a cada edição da pesquisa, está mais sênior e já usa IA de forma quase universal. O que ainda não amadureceu é a entrega de IA em escala nas empresas, a equidade de gênero e a retenção de talentos. Para uma instituição financeira, esses três pontos definem onde investir.
 
 ---
 
@@ -29,131 +31,11 @@ _a preencher_
 
 ### Objetivo geral
 
-_a preencher_
+Construir um pipeline de dados em camadas na AWS e usar a pesquisa State of Data Brasil para orientar decisões de contratação, capacitação e investimento em Dados e IA.
 
 ### Objetivos específicos
 
-- _a preencher_
-
----
-
-## 🗂️ Base de Dados
-
-_a preencher_
-
-### Fonte
-
-State of Data Brasil — Data Hackers (Kaggle):
-
-https://www.kaggle.com/datahackers/datasets
-
----
-
-## ☁️ Arquitetura da Solução
-
-_a preencher_
-
-### Ingestão no S3
-
-_a preencher_
-
-### Camada Bronze
-
-_a preencher_
-
-### Camada Silver
-
-_a preencher_
-
-### Camada Gold
-
-_a preencher_
-
-### Catalogação e consultas
-
-_a preencher_
-
----
-
-## 🔎 Análise Exploratória de Dados
-
-_a preencher_
-
----
-
-## 📈 Resultados
-
-### Estrutura do mercado
-
-_a preencher_
-
-### Perfis mais valorizados
-
-_a preencher_
-
-### Diversidade de gênero
-
-_a preencher_
-
-### Tecnologias mais adotadas
-
-_a preencher_
-
-### Adoção de Inteligência Artificial
-
-_a preencher_
-
-### Região, senioridade e modelo de trabalho
-
-_a preencher_
-
-### ⚠️ Interpretação dos resultados
-
-_a preencher_
-
----
-
-## 💡 Recomendações Estratégicas
-
-### Contratação
-
-_a preencher_
-
-### Capacitação
-
-_a preencher_
-
-### Investimento em tecnologia
-
-_a preencher_
-
----
-
-## 🛠️ Tecnologias Utilizadas
-
-- _a preencher_
-
----
-
-## 📁 Estrutura do Repositório
-
-```text
-FIAP---TECH-CHALLENGE-FASE-3/
-│
-├── data/
-│   ├── raw/
-│   ├── bronze/
-│   ├── silver/
-│   └── gold/
-│
-├── scripts/
-│   └── glue_jobs/
-│
-├── sql/
-├── diagrama/
-├── graficos/
-├── apresentacao/
-├── docs/
-│
-└── README.md
-```
+- Organizar os dados das três edições em camadas Bronze, Silver e Gold no Amazon S3;
+- Padronizar as três edições em um único formato;
+- Catalogar as tabelas no Glue Data Catalog e consultá-las com o Amazon Athena;
+- Responder às sete perguntas de negócio
