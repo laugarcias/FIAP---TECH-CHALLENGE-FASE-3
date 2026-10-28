@@ -132,10 +132,6 @@ O uso de IA no trabalho chegou a **98,2%** em 2025, e **42,3%** já têm a ferra
 
 O modelo de trabalho pesa mais que a região. A satisfação é de **74,6%** no remoto e **54,3%** no presencial, e **92,9%** dos remotos procurariam outro emprego se a presença integral fosse exigida. No mesmo nível de senioridade, os salários entre regiões ficam próximos.
 
-### Oportunidades e desafios
-
-Em 2025, o setor financeiro paga **R$ 14.445**, contra R$ 12.743 dos demais setores (**+13,4%**), e tem satisfação cerca de 8 pontos maior. A principal oportunidade é levar a IA do piloto à produção. O principal desafio é reter talentos: **75,2%** dos profissionais ocupados buscam emprego ou estão abertos a propostas.
-
 ### ⚠️ Interpretação dos resultados
 
 - A amostra é voluntária e não representa estatisticamente todo o mercado. A edição de 2025 é menor (3.494 respondentes);
@@ -147,19 +143,25 @@ Em 2025, o setor financeiro paga **R$ 14.445**, contra R$ 12.743 dos demais seto
 
 ---
 
-## 💡 Recomendações Estratégicas
+## 💡 Oportunidades e Desafios
 
-### Contratação
+Em 2025, o setor financeiro paga **R$ 14.445**, contra R$ 12.743 dos demais setores (**+13,4%**), e tem satisfação cerca de 8 pontos maior. A maior oportunidade é levar a IA do piloto à produção, e o maior risco é perder talentos escassos.
 
-_a preencher_
+### Oportunidades
 
-### Capacitação
+1. **Levar IA à produção:** só 26,5% das empresas têm IA generativa em produção. As duas maiores barreiras são expertise (38,8%) e dados não prontos (36,8%).
+2. **Base de dados primeiro:** investir em plataforma e qualidade de dados ataca a barreira "dados não prontos".
+3. **Stack com mercado amplo:** AWS (48,3%), Databricks (32,9%), PostgreSQL (36,8%), Python e Power BI (59,0%) concentram a adoção, o que facilita contratar e capacitar.
+4. **Ferramentas de IA pagas pela empresa:** já são 42,3% em 2025, contra 6,4% em 2023; deixaram de ser diferencial e viraram expectativa.
+5. **Atração:** o setor financeiro paga 13% acima dos demais em 2025 e tem satisfação cerca de 8 pontos maior.
 
-_a preencher_
+### Desafios
 
-### Investimento em tecnologia
-
-_a preencher_
+1. **Talento de IA escasso e caro:** Engenharia de ML/IA ganha R$ 18,6 mil em média, com alta de 19% em um ano.
+2. **Retenção:** 75,2% dos ocupados buscam emprego (34,5%) ou estão abertos a propostas (40,7%). Os critérios mais citados para escolher emprego são salário (83,2%) e trabalho remoto (56,6%).
+3. **Modelo de trabalho:** exigir presença integral levaria 92,9% dos remotos a procurar outro emprego.
+4. **Diversidade:** mulheres são 22,0% e ganham 18,6% menos no nível Sênior; a participação caiu desde 2023.
+5. **Gestão de dados:** os principais desafios dos gestores são dividir tempo entre entregas técnicas e gestão (36,4%, era 29,4% em 2023) e administrar expectativas do negócio (33,3%), seguidos de projetos multidisciplinares (29,1%), gerar valor para o negócio (23,5%) e organizar informações com qualidade (21,6%).
 
 ---
 
