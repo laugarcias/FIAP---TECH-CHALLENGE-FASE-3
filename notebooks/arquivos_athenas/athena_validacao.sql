@@ -1,9 +1,8 @@
 
 -- TECH CHALLENGE - FASE 3 | VALIDAÇÃO DAS CAMADAS NO ATHENA
 -- Database: db_state_of_data
--- Rode cada bloco separadamente no editor do Athena.
 -- Os valores "esperados" abaixo vieram do teste local dos jobs
--- com os 3 CSVs enviados. Se der diferente, algo mudou no caminho.
+
 
 -- 1. BRONZE: linhas por edição (esperado: 5293 | 5217 | 3495)
 
